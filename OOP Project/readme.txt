@@ -29,6 +29,3 @@ Some Dummy Accounts
 
 11. Username: Syed Abdul Basit
     pwd: 1234
-
-12. Saving accounts pin, checking accounts pin and loan accounts pin are same for all customer for their all accounts respectively i.e,
-	pwd: 1234
