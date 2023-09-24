@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Admin</title>
+    <style>
+        h2 {
+            font-size: 80px;
+            color: white;
+        }
+
+        .tile {
+            color: black;
+            background-color: #4056F4;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px #000;
+        }
+
+        @media screen and (max-width: 992px) {
+            .row {
+                height: fit-content !important;
+            }
+
+            .customers {
+                width: 60% !important;
+            }
+
+            #search_input {
+                width: 60% !important;
+            }
+
+            #search_button {
+                width: 40% !important;
+            }
+        }
+
+        @media screen and (max-width: 1200px) {
+            .customers {
+                height: 350px !important;
+            }
+
+            .search {
+                width: 100%;
+            }
+
+            
+        }
+
+        .search {
+            padding: 4px;
+        }
+
+        @keyframes shine {
+            from {
+                border-bottom: 2px solid white;
+                color: white
+            }
+            to {
+                border-bottom: 2px solid #4056F4;
+                color: #4056F4;
+            }
+        }
+
+        .b {
+            color: white;
+            background: none;
+            border: none;
+            border-bottom: 2px solid white;
+            width: 100%;
+            margin-top: 10px;
+            padding: 5px;
+        }
+
+        .b:hover {
+            animation: shine 2s;
+            color: #4056F4;
+            border-bottom: 2px solid #4056F4;
+        }
+
+        input[type="text"] {
+            outline: none;
+        }
+
+        .customer {
+            width: 100%;
+            margin: 0px;
+            font-weight: 24px;
+            padding: 4px;
+            border-bottom: 2px solid black;
+        }
+
+        .customer:hover {
+            cursor: pointer;
+            background-color: #4056F4;
+            color: white;
+        }
+
+        .customer:last-of-type {
+            border-bottom: 0px;
+        }
+
+        .customers {
+            overflow: auto;
+            background-color: rgb(224, 221, 221);
+            border-radius: 4px;
+            margin: 20px auto;
+            width: 90%;
+            height: 450px;
+            min-width: 200px;
+
+        }
+
+        .account {
+            border: 1px solid;
+            padding: 4px;
+        }
+
+        .accounts {
+            border: 1px solid;
+            margin-top: 8px;
+        }
+
+        .heading {
+            background-color: #212529;
+            color: white;
+            text-align: center;
+            padding-top: 4px;
+        }
+
+        .details {
+            background-color: #4056F4;
+            color: white;
+            margin-top: 4px;
+        }
+
+
+        .detail_label {
+            background-color: #212529;
+            color: white;
+            margin-top: 4px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row vh-100">
+          <div class="col-12 col-lg-3 bg-dark">
+            <table style="width: 90%; margin: 0 auto; text-align: center;">
+                <tr>
+                    <td colspan="3">
+                        <a href="{% url 'admin_home' %}"><input type="button" value="Home" class="b"></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <a href="{% url 'home' %}"><input type="button" value="Logout" class="b"></a>
+                    </td>
+                </tr>
+                <tr style="display: flex; flex-wrap: wrap; justify-content: center; width: 100%;">
+                    <form action="" method="post">{% csrf_token %}
+                        <td class="search">
+                            <input type="text" style="padding: 4px; margin-top: 30px; width: 100%; border: none; border-radius: 5px;" name="name_search" id="search_input" required>
+                        </td>
+                        <td class="search">
+                            <input type="submit" id="search_button" style="padding: 5px 7px; margin-top: 30px; width: 100%; border: none; background-color: #4056F4; color: white; border-radius: 20px;" value="Search">
+                        </td>
+                    </form>
+                </tr>
+            </table>
+            <div class="customers">
+                {% if customers|length == 0 %}
+                <p class="customer">No customers found</p>
+                {% else %}
+                {% for customer in customers %}
+                <a href="{% url 'admin_accounts' username=customer %}" style="text-decoration: none; color: black;"><p class="customer">{{ customer }}</p></a>
+                {% endfor %}
+                {% endif %}
+            </div>
+          </div>
+        
+          {% if display %}
+          <div class="col-12 col-lg-9 bg-light">
+            <div class="container" style="margin-top: 20px;">
+                <div class="row">
+                    <div class="col-12 col-md-3 detail_label"><h4>Username</h4></div>
+                    <div class="col-12 col-md-9 details"><h4>{{ username }}</h4></div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-3 detail_label"><h4>First Name</h4></div>
+                    <div class="col-12 col-md-9 details"><h4>{{ first_name }}</h4></div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-3 detail_label"><h4>Last Name</h4></div>
+                    <div class="col-12 col-md-9 details"><h4>{{ last_name }}</h4></div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-3 detail_label"><h4>Address</h4></div>
+                    <div class="col-12 col-md-9 details"><h4>{{ address }}</h4></div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-3 detail_label"><h4>No.of Accounts</h4></div>
+                    <div class="col-12 col-md-9 details"><h4>{{ no_of_accounts }}</h4></div>
+                </div>
+        
+            <div class="container" style="margin-top: 20px; margin-bottom: 20px;">
+                <div class="row col-12" style="text-align: center; margin: 0 auto;"><h3>Accounts</h3></div>
+                <div class="row col-12"><h5>Checking Accounts</h5></div>
+                {% if checking_accounts %}
+                <div class="row">
+                    <div class="col-12 col-lg-3 heading"><h6>Account No.</h6></div>
+                    <div class="col-12 col-lg-3 heading"><h6>Balance</h6></div>
+                    <div class="col-12 col-lg-3 heading"><h6>Creation Date</h6></div>
+                    <div class="col-12 col-lg-3 heading"></div>
+                </div>
+                {% for account in checking_accounts %}
+                <div class="row accounts">
+                    <div class="col-12 col-lg-3 account">{{ account.account_num }}</div>
+                    <div class="col-12 col-lg-3 account">{{ account.balance }} Rs</div>
+                    <div class="col-12 col-lg-3 account">{{ account.creation_date }}</div>
+                    <div class="col-12 col-lg-3 account" style="text-align: center;"><a href="{% url 'admin_transactions' name=username account_num=account.account_num %}">View Transactions</a></div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="row col-12 text-danger"><h5>No Checking Accounts Yet</h5></div>
+                {% endif %}
+
+                <div class="row col-12" style="margin-top: 20px;"><h5>Saving Accounts</h5></div>
+                {% if saving_accounts %}
+                <div class="row">
+                    <div class="col-12 col-lg-3 heading"><h6>Account No.</h6></div>
+                    <div class="col-12 col-lg-3 heading"><h6>Balance</h6></div>
+                    <div class="col-12 col-lg-3 heading"><h6>Creation Date</h6></div>
+                    <div class="col-12 col-lg-3 heading"></div>
+                </div>
+                {% for account in saving_accounts %}
+                <div class="row accounts">
+                    <div class="col-12 col-lg-3 account">{{ account.account_num }}</div>
+                    <div class="col-12 col-lg-3 account">{{ account.balance }} Rs</div>
+                    <div class="col-12 col-lg-3 account">{{ account.creation_date }}</div>
+                    <div class="col-12 col-lg-3 account" style="text-align: center;"><a href="{% url 'admin_transactions' name=username account_num=account.account_num %}">View Transactions</a></div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="row col-12 text-danger"><h5>No Saving Accounts Yet</h5></div>
+                {% endif %}
+
+                <div class="row col-12" style="margin-top: 20px;"><h5>Loan Accounts</h5></div>
+                {% if loan_accounts %}
+                <div class="row">
+                    <div class="col-12 col-lg-2 heading"><h6>Account No.</h6></div>
+                    <div class="col-12 col-lg-2 heading"><h6>Balance</h6></div>
+                    <div class="col-12 col-lg-2 heading"><h6>Creation Date</h6></div>
+                    <div class="col-12 col-lg-2 heading"><h6>Principle Amount</h6></div>
+                    <div class="col-12 col-lg-2 heading"><h6>Loan Duration</h6></div>
+                    <div class="col-12 col-lg-2 heading"></div>
+                </div>
+                {% for account in loan_accounts %}
+                <div class="row accounts">
+                    <div class="col-12 col-lg-2 account">{{ account.account_num }}</div>
+                    <div class="col-12 col-lg-2 account">{{ account.balance }} Rs</div>
+                    <div class="col-12 col-lg-2 account">{{ account.creation_date }}</div>
+                    <div class="col-12 col-lg-2 account">{{ account.principle_amount }} Rs</div>
+                    <div class="col-12 col-lg-2 account">{{ account.loan_duration }} month</div>
+                    <div class="col-12 col-lg-2 account" style="text-align: center;"><a href="{% url 'admin_transactions' name=username account_num=account.account_num %}">View Transactions</a></div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="row col-12 text-danger"><h5>No Loan Accounts Yet</h5></div>
+                {% endif %}
+            </div>
+          </div>
+          {% else %}
+          <div class="col-12 col-lg-9 bg-light">
+            <div class="container-fluid" style="margin-top: 40px;">
+                <div class="row d-flex justify-content-center">
+                  <div class="col-md-5 col-10">
+                    <div class="tile">
+                      <h1>Total Customers</h1>
+                      <h2>{{ total_customers }}</h2>
+                    </div>
+                  </div>
+                  <div class="col-md-5 col-10">
+                    <div class="tile">
+                      <h1>Total Accounts</h1>
+                      <h2>{{ total_accounts }}</h2>
+                    </div>
+                  </div>
+                  <div class="col-md-5 col-10">
+                    <div class="tile">
+                      <h1>Total Transactions</h1>
+                      <h2>{{ total_transactions }}</h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+          {% endif %} 
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

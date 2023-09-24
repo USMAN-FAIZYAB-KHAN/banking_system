@@ -1,0 +1,199 @@
+<!-- {% load static %} -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>{% block title %}{% endblock %}</title>
+    {% if alerts %}
+        <style>
+              .alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    font-size: 22px;
+    font-family: Arial, Helvetica, sans-serif;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background-color: transparent; /* Set the background color to transparent */
+  }
+
+  .alert-info {
+    color: #000; /* Set text color to white */
+    background-color: rgba(255, 136, 0, 0.8); /* Set background color to transparent orange */
+    border-color: rgba(255, 204, 128, 0.8); /* Set border color to transparent lighter shade of orange */
+  }
+
+  .close {
+    float: right;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: 0.2;
+  }
+
+  .close:hover {
+    color: #000;
+    text-decoration: none;
+    opacity: 0.5;
+  }
+        </style>
+    {% endif %}
+    {% block css %}{% endblock %}
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #ebeff5;
+            line-height: 2rem;
+        }
+    
+        #accounts-link:hover {
+            background-color: white;
+        }
+
+        #con1 h5,
+        h6 {
+            padding-top: 1rem;
+            padding-left: 1rem;
+            padding-bottom: 0;
+        }
+        ul {
+            list-style: none;
+        }
+        li {
+            padding-bottom: 0.3rem;
+        }
+
+        li:first-child {
+            margin-top: 1rem;
+        }
+
+        button {
+          display: block;
+        }
+
+        a:any-link {
+            display: block;
+            text-decoration: none;
+            font-family: 'Times New Roman', Times, serif;
+            color: #ebeff5;
+        }
+
+        .sidelinks {
+            font-size: 1.2rem;
+            padding: 0.2rem;
+            padding-left: 0.5rem;
+        }
+
+        a:hover {
+            display: block;
+            background-color: green;
+            border-radius: 5px;
+        }
+
+        p {
+            padding: 0rem;
+        }
+
+        #con2 {
+            padding-left: 0rem;
+        }
+
+        #a1:hover {
+            background-color: hsla(134, 61%, 41%, 0);
+            display: block;
+        }
+        #a2:hover {
+            background-color: hsla(216, 98%, 52%, 0);
+        }
+
+        #ne {
+          margin-top: 5rem;
+        }
+
+        input[type="password"],
+        input[type="number"] {
+          display: inline-block;
+          width: 20vw;
+          
+        }
+    </style>
+</head>
+<body>
+    {% if alerts %}
+        <div class="container-fluid" style="position: absolute; z-index: 1; text-align: center; margin: 10px" id="alertContainer"></div>
+    {% endif %}
+    <div class="container-fluid ">
+        <div class="row vh-100">
+            <div class="col-lg-2 col-md-4 col-12 bg-dark p-4">
+                    <div class="text-white" id="con1">
+                      <h5>ABC Bank</h5>
+                      <hr class="bg-light">
+                      <!-- <h5>Create An Account</h5> -->
+                      
+                        {% if display %}
+                            <a href="{% url 'account_detail' account_type=account_type acnt_num=account_num %}" class="sidelinks">Details</a>
+                            {% if account_type == "Checking" or account_type == "Saving" %}
+                                <a href="{% url 'deposit_page' account_type=account_type acnt_num=account_num %}" class="sidelinks">Deposit</a>
+                                <a href="{% url 'withdraw_page' account_type=account_type acnt_num=account_num %}" class="sidelinks">Withdraw</a>
+                            {% else %}
+                                <a href="{% url 'take_loan' act_type=account_type act_num=account_num %}" class="sidelinks">Take Loan</a>
+                                <a href="{% url 'deposit_page' account_type=account_type acnt_num=account_num %}" class="sidelinks">Pay Loan</a>
+                            {% endif %}
+                            <a href="{% url 'show' %}?param1={{account_type}}" class="sidelinks">Back</a>
+                        {% else %}
+                        <a href="{% url 'user_home' %}" class="sidelinks">Home</a>                             
+                        <a href="{% url 'show' %}?param1=Saving" class="sidelinks">Saving Account</a>
+                        <a href="{% url 'show' %}?param1=Checking" class="sidelinks">Checking Account</a>    
+                        <a href="{% url 'show' %}?param1=Loan" class="sidelinks">Loan Account</a>
+                        <a href="{% url 'account_creation' %}" class="sidelinks">Create Account</a>
+                        <a href="{% url 'home' %}" class="sidelinks">Log out</a>
+                        {% endif %}
+                        
+                </div>
+            </div>
+            <div class="col-lg-10 col-12 col-md-8">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+        {{ale}}
+    </div>
+    {% if alerts %}
+    <script>
+        function createAlert(message, type) {
+  // Create the alert element
+  var alertDiv = document.createElement('div');
+  alertDiv.className = 'col-12 col-md-8 mx-auto alert alert-' + type;
+  alertDiv.innerHTML = message;
+
+  // Create the close button
+  var closeButton = document.createElement('button');
+  closeButton.className = 'close';
+  closeButton.innerHTML = '&times;';
+  closeButton.addEventListener('click', function() {
+    // Remove the alert when the close button is clicked
+    alertDiv.parentNode.removeChild(alertDiv);
+  });
+
+  // Append the close button to the alert
+  alertDiv.appendChild(closeButton);
+
+  // Append the alert to the alert container
+  var alertContainer = document.getElementById('alertContainer');
+  alertContainer.appendChild(alertDiv);
+}
+
+// Example usage
+{% for alert in alerts %}
+var account_num = "{{alert.account_num}}";
+var interest = "{{alert.interest}}";
+var rate = "{{alert.rate}}";
+createAlert(`Interest of ${interest} Rs has been added to ${account_num} at the rate of ${rate}%`, 'info');
+{% endfor %}
+    </script>
+    {% endif %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

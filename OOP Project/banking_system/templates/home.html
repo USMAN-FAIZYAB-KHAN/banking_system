@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+    <style>
+      body {
+        background-color: #E1F5FE;
+      }
+
+      .service {
+        border-radius: 50%;
+      }
+
+      .service:hover {
+        border: 2px solid black;
+      }
+
+      .accounts:hover {
+        box-shadow: 3px 3px 3px 2px #565657;
+      }
+  </style>
+{% endblock %}
+{% block title %}Home{% endblock %}
+{% block content %}
+  <div class="container-fluid">
+    <div class="row" style="background-color: #d7d9da;">
+      <div id="carouselExampleCaptions" class="carousel slide col-12 col-md-8" style="margin: 0 auto; " data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="{% static 'images/atm_machine.jpg' %}" style="height: 550px;" class="d-block w-100 image-fluid" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Easy Account Management</h5>
+              <p>Effortlessly manage your accounts with our intuitive online banking platform. Check your balance, view transaction history, and track your expenses with just a few clicks.</p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="{% static 'images/coins.jpg' %}" style="height: 550px; width: 100%;" class="d-block w-100 image-fluid" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Deposit Services</h5>
+              <p>We offer various deposit services to our customers, allowing them to securely store their money.</p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="{% static 'images/credit_card.jpg' %}" style="height: 550px; width: 100%;" class="d-block w-100 image-fluid" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+              <h5 style="color: black;">Seamless Online Account Opening</h5>
+              <p style="color: black;">Open an account in minutes with our hassle-free online process. Say goodbye to paperwork and start your banking journey with just a few clicks.</p>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid" style="background-color: #212529;">
+    <h3 style="text-align: center; color: white; font-family: Arial, Helvetica, sans-serif; padding: 4px;">Our Services</h3>
+  </div>
+  <div class="container-fluid">
+    <div class="row" style="text-align: center; margin-top: 30px;">
+      <div class="col-12 col-md-4">
+        <img src="{% static 'images/deposit.png' %}" class="service" alt="" width="250px" height="250px">
+        <h4 style="margin-top: 10px;">Easy Deposit</h4>
+      </div>
+      <div class="col-12 col-md-4">
+        <img src="{% static 'images/multiple_accounts.png' %}" class="service" alt="" width="250px" height="250px">
+        <h4 style="margin-top: 10px;">Multiple Accounts</h4>
+      </div>
+      <div class="col-12 col-md-4">
+        <img src="{% static 'images/online_banking.png' %}" class="service" alt="" width="250px" height="250px">
+        <h4 style="margin-top: 10px;">Online Banking</h4>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid" style="background-color: #212529;">
+    <h3 style="text-align: center; color: white; font-family: Arial, Helvetica, sans-serif; padding: 4px; margin-top: 30px;">Accounts We Offer</h3>
+  </div>
+  <div class="card mb-3 accounts" style="max-width: 850px; margin: 20px auto;">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img src="{% static 'images/calculator.jpg' %}" class="img-fluid rounded-start" alt="...">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">Checking Account</h5>
+          <p class="card-text">Simplify your money management with our convenient checking accounts. Enjoy unlimited transactions, user-friendly online banking services and a competitive credit.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card mb-3 accounts" style="max-width: 850px; margin: 20px auto;">
+    <div class="row g-0">
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">Saving Account</h5>
+          <p class="card-text">Start building a secure future with our savings accounts. Benefit from competitive rates and easy access to your funds. Maximize your savings potential today.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <img src="{% static 'images/saving.jpg' %}" class="img-fluid rounded-start" alt="...">
+      </div>
+    </div>
+  </div>
+  <div class="card mb-3 accounts" style="max-width: 850px; margin: 20px auto;">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img src="{% static 'images/cheque.jpg' %}" class="img-fluid rounded-start" alt="...">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">Loan Account</h5>
+          <p class="card-text">Start building a secure future with our high-interest savings accounts. Benefit from competitive rates and easy access to your funds. Maximize your savings potential today.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock %}

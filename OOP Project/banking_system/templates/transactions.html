@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        .details {
+            background-color: #4056F4;
+            color: white;
+            margin-top: 4px;
+        }
+
+        .detail_label {
+            background-color: #212529;
+            color: white;
+            margin-top: 4px;
+        }
+
+        #back:hover {
+            background-color: #4056F4;
+        }
+
+    </style>
+    <title>Customer Transactions</title>
+</head>
+<body>
+    <div class="container-fluid" style="text-align: center; background-color: #212529; color: white; ">
+        <div class="row">
+            <div class="col-12 col-md-11" style="margin-top: 5px; margin-bottom: 5px;">
+                <h3>Transactions</h3>
+            </div>
+            <div class="col-12 col-md-1" style="padding-top: 11px;" id="back">
+                <a href="{% url 'admin_accounts' username=username %}" style="text-decoration: none; color: white;">
+                    <h5>Go Back</h5>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-md-3 detail_label"><h5>Account Number</h5></div>
+            <div class="col-12 col-md-9 details"><h5>{{ account_number }}</h5></div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-3 detail_label"><h5>
+            {% if account_type == "Loan" %}
+                Amount to be Paid
+            {% else %}
+                Balance
+            {% endif %}
+            </h5></div>
+            <div class="col-12 col-md-9 details"><h5>{{ balance }} Rs</h5></div>
+        </div>
+        {% if account_type == "Checking" %}
+        <div class="row">
+            <div class="col-12 col-md-3 detail_label"><h5>Credit Limit</h5></div>
+            <div class="col-12 col-md-9 details"><h5>{{ credit_limit }} Rs</h5></div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-3 detail_label"><h5>Remaining Credit Limit</h5></div>
+            <div class="col-12 col-md-9 details"><h5>{{ remaining_credit_limit }} Rs</h5></div>
+        </div>
+        {% else %} 
+        <div class="row">
+            <div class="col-12 col-md-3 detail_label"><h5>Interest Rate</h5></div>
+            <div class="col-12 col-md-9 details"><h5>{{ interest_rate }} %</h5></div>
+        </div>
+        {% if account_type == "Loan" %}
+        <div class="row">
+            <div class="col-12 col-md-3 detail_label"><h5>Principal Amount</h5></div>
+            <div class="col-12 col-md-9 details"><h5>{{ principle_amount }} Rs</h5></div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-3 detail_label"><h5>Loan Duration</h5></div>
+            <div class="col-12 col-md-9 details"><h5>{{ loan_duration }} Months</h5></div>
+        </div>
+        {% endif %}
+        {% endif %}
+    </div>
+    {% if transactions|length == 0 %}
+        <div class="container-fluid" style="text-align: center; margin-top: 4px;">
+            <h4>No Transactions Yet</h4>
+        </div>
+    {% else %}
+    <table class="table table-striped" style="margin-top: 4px;">
+        <thead style="background-color: #212529; color: white;">
+          <tr>
+            <th scope="col">S#</th>
+            <th scope="col">Transaction Type</th>
+            <th scope="col">Transaction Date</th>
+            <th scope="col">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for transaction in transactions %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{transaction.type}}</td>
+            <td>{{transaction.date}}</td>
+            <td>{{transaction.amount}} Rs</td>
+          </tr>
+        {% endfor %} 
+        </tbody>
+      </table>
+    {% endif %}
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

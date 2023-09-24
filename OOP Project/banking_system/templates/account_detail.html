@@ -1,0 +1,83 @@
+{% extends 'base1.html' %}
+{% block title %}Account Details{% endblock %}
+{% block css %}
+<style>
+  th, td {
+    font-size: 20px;
+  }
+</style>
+{% endblock %}
+{% block content %}
+<table class="table" style="background-color: white; margin-top: 10px;">
+      <tr>
+        <th>Account Number</th>
+        <td style="background-color: #212529; color: white;">{{ account_num }}</td>
+      </tr>
+      <tr>
+        <th>Balance</th>
+        <td style="background-color: #212529; color: white;">{{ balance }} Rs</td>
+      </tr>
+      <tr>
+        <th>Account Type</th>
+        <td style="background-color: #212529; color: white;">{{ account_type }}</td>
+      </tr>
+      <tr>
+        <th>Creation Date</th>
+        <td style="background-color: #212529; color: white;">{{ creation_date }}</td>
+      </tr>
+      {% if account_type == "Loan" %}
+      <tr>
+        <th>Principle Amount</th>
+        <td style="background-color: #212529; color: white;">{{ principle_amount }} Rs</td>
+      </tr>
+      <tr>
+        <th>Loan Duration</th>
+        <td style="background-color: #212529; color: white;">{{ loan_duration }} Months</td>
+      </tr>
+      {% endif %}
+      {% if account_type == "Saving" or account_type == "Loan" %}
+      <tr>
+        <th>Interest Rate</th>
+        <td style="background-color: #212529; color: white;">{{ interest_rate }} %</td>
+      </tr>
+      {% else %}
+        <tr>
+            <th>Credit Limit</th>
+            <td style="background-color: #212529; color: white;">{{ credit_limit }} Rs</td>
+        </tr>
+        <tr>
+          <th>Remaining Credit Limit</th>
+          <td style="background-color: #212529; color: white;">{{ remaining_credit_limit }} Rs</td>
+        </tr>
+      {% endif %}
+</table>
+<div class="container-fluid text-center">
+    <h2>Transactions</h2>
+</div>
+{% if transactions %}
+<table class="table table-striped" style="margin-top: 4px;">
+    <thead style="background-color: #212529; color: white;">
+      <tr>
+        <th scope="col">S#</th>
+        <th scope="col">Transaction Type</th>
+        <th scope="col">Transaction Date</th>
+        <th scope="col">Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for transaction in transactions %}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{transaction.type}}</td>
+        <td>{{transaction.date}}</td>
+        <td>{{transaction.amount}} Rs</td>
+      </tr>
+    {% endfor %} 
+    </tbody>
+  </table>
+{% else %}
+    <div class="container-fluid text-center">
+        <h4 class="text-primary">No Transactions Yet</h4>
+    </div>
+{% endif %}
+{% endblock %}

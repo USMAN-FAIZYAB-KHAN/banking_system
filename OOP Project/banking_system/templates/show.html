@@ -1,0 +1,46 @@
+{% extends 'base1.html' %}
+{% block title %}{{ title }}{% endblock %}
+{% block css %}
+  <style>
+    .detail-link {
+      text-decoration: none;
+    }
+  </style>
+{% endblock %}
+{% block content %}
+        <h1 style="text-align: center; margin: 20px 0px;">{{ title }}</h1>
+        {% if accounts|length == 0 %}
+          <h3 style="text-align: center; margin: 20px 0px; color: #198754;">No Accounts Found</h3>
+        {% else %}
+        <table class="table table-hover table-dark">
+            <thead>
+              <tr style="border-bottom: 1px solid white;">
+                <th scope="col">No. of Accounts</th>
+                <th scope="col" style="background-color: #157347; color: white;">{{ accounts | length }}</th>
+              </tr> 
+              <tr>
+                <th scope="col">S No.</th>
+                <th scope="col">Account No</th>
+                <th scope="col">Account_type</th>
+                <th scope="col">Creation Date</th>
+                <th scope="col">Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for account in accounts %}
+                <tr>
+                  <th scope="row">{{ forloop.counter }}</th>
+                  <th scope="row">{{ account.account_num }}</th>
+                  <td>{{ account.account_type }}</td>
+                  <td>{{account.creation_date }}</td>
+                  <td><a class="detail-link" href="{% url 'account_verification' account_number=account.account_num %}"><button class="btn btn-success" style="width: 100%;">Go</button></a></td>
+                </tr>
+              {% endfor %}
+              
+            </tbody>
+          </table>
+        {% endif %}
+        {% if msg %}
+        <h2 style="text-align: center; color: #198754;">{{ msg }}</h2>
+        {% endif %}
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends 'base1.html' %}
+{% block title %}Withdraw{% endblock %}
+{% block css %}
+
+<style>
+    label {
+        font-size: 20px;
+    }
+
+    .form-control {
+        margin-bottom: 10px;
+    }
+
+    .form-container {
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px 0px #000;
+    }
+
+    .form-container .form-group label {
+      font-weight: bold;
+    }
+    .form-container .btn-primary {
+      background-color: #212529;
+      border-color: #212529;
+    }
+    .form-container .btn-primary:hover {
+      background-color: #343a40;
+      border-color: #343a40;
+    }
+
+</style>
+{% endblock %}
+{% block content %}
+<div class="container-fluid d-flex justify-content-center align-items-center" style="height: 100%;">
+    <div class="row">
+        <div class="form-container col-md-12 col-12" style="background-color: #212529; color: white; width: 500px;">
+            <h2 class="text-center mb-4">Withdraw Amount</h2>
+            <form method="post" action="">{% csrf_token %}
+                <div class="form-group">
+                    <label for="accountNum">Account No.</label>
+                    <h3 style="color: rgb(63, 218, 63);">{{ account_num }}</h3>
+                </div>
+                <div class="form-group">
+                    <label for="accountNum">Balance</label>
+                    <h3 style="color: rgb(63, 218, 63);">{{ balance }} Rs</h3>
+                </div>
+                {% if account_type == "Checking" %}
+                <div class="form-group">
+                    <label for="accountNum">Remaining Credit Limit</label>
+                    <h3 style="color: rgb(63, 218, 63);">{{ remaining_credit_limit }} Rs</h3>
+                </div>
+                {% endif %}
+                <div class="form-group">
+                    <label for="accountPin">Amount</label>
+                    <br>
+                    <input type="number" class="form-control" id="amount" style="width: 90%; font-size: 18px; font-family: Arial, Helvetica, sans-serif;" name="amount" placeholder="Enter amount to be withdrawn" required><h4 style="display: inline; color: rgb(63, 218, 63); margin-left: 10px;">Rs</h4>
+                </div>
+                {% if success == True %}
+                <div class="alert alert-success" role="alert" style="padding: 8px; margin-top: 10px;">
+                    <h5>{{ msg }}</h5>
+                </div>
+                {% elif success == False %}
+                <div class="alert alert-danger" role="alert" style="padding: 8px; margin-top: 10px;">
+                    <h5>{{msg}}</h5>
+                </div>
+                {% endif %}
+              <button type="submit" class="btn btn-success btn-block" style="margin-top: 8px;">Withdraw</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

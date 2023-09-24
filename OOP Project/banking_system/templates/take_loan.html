@@ -1,0 +1,81 @@
+{% extends "base1.html" %}
+{% block title %}Choose your loan option{% endblock %}
+{% block css %}
+<style>
+  p {
+      color: rgb(73, 212, 73);
+      font-size: 20px;
+  }
+
+  .tile {
+      color: white;
+      background-color: #212529;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px 0px #000;
+  }
+
+  .loan {
+      text-decoration: none;
+  }
+
+  .loan:hover {
+      text-decoration: none;
+      background: none;
+  }
+
+</style>
+{% endblock %}
+{% block content %}
+{% if error %}
+<div class="container-fluid d-flex justify-content-center align-items-center" style="height: 100vh;">
+  <div class="row"></div>
+    <div class="col-12" style="text-align: center; margin: 0 auto;"><h1>{{error}}</h1></div>
+  </div>
+</div>
+{% else %}
+{% if success %}
+<div class="container-fluid d-flex justify-content-center align-items-center" style="height: 100vh;">
+  <div class="row"></div>
+    <div class="col-12" style="text-align: center; margin: 0 auto;"><h1>{{success}}</h1></div>
+  </div>
+</div>
+{% else %}
+<div class="container-fluid">
+  <div class="row d-flex justify-content-center">
+    <div class="col-md-5 col-10">
+      <div class="tile">
+        <h3>Option 1</h3>
+        <h4>Loan Amount</h4>
+        <p>100000 Rs</p>
+        <h4>Loan Duration</h4>
+        <p>12 Months</p>
+        <button class="btn btn-primary"><a class="loan" href="{% url 'take_loan' act_type=account_type act_num=account_num %}?amount=100000&duration=12">Take Loan</a></button>
+      </div>
+    </div>
+    <div class="col-md-5 col-10">
+      <div class="tile">
+        <h3>Option 2</h3>
+        <h4>Loan Amount</h4>
+        <p>200000 Rs</p>
+        <h4>Loan Duration</h4>
+        <p>24 Months</p>
+        <button class="btn btn-primary"><a class="loan" href="{% url 'take_loan' act_type=account_type act_num=account_num %}?amount=200000&duration=24">Take Loan</a></button>
+      </div>
+    </div>
+    <div class="col-md-5 col-10">
+      <div class="tile">
+        <h3>Option 3</h3>
+        <h4>Loan Amount</h4>
+        <p>300000 Rs</p>
+        <h4>Loan Duration</h4>
+        <p>36 Months</p>
+        <button class="btn btn-primary"><a class="loan" href="{% url 'take_loan' act_type=account_type act_num=account_num %}?amount=300000&duration=36">Take Loan</a></button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endif %}
+{% endblock %}
